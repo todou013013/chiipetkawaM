@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <title>消消樂遊戲</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="center-container">
+        
+        <div class="sidebar left">
+            <img id="playerImage" src="me1.png" alt="自己" class="sidebar-image">
+            <div class="info">
+                <h3>即時分數: <span id="score">0</span></h3>
+                <h3>血條: <span id="playerHealth">100</span> / 100</h3>
+                <div class="bar">
+                    <div class="health" id="playerHealthFill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+       
+        
+        <div class="game-area">
+            
+                <h2>第 <span id="level">1</span> 關</h2>
+                <h3>回合數: <span id="round">8</span></h3>
+                <h3>步數: <span id="currentsteps">5</span> / <span id="steps">5</span></h3>
+            
+            <canvas id="gameCanvas" width="500" height="500"></canvas>
+            <button id="resetButton"> <img src="ran.png" alt="重置" /></button>
+                
+        </div>
+
+        
+        <div class="sidebar right">
+            <img id="enemyImage" src="en1.png" alt="敵人" class="sidebar-image">
+            <div class="info">
+                <h3>敵人分數: <span id="showenemyscore">0</span></h3>
+                <h3>血條: <span id="currentenemyHealth">100</span> / <span id="totalEnemyHealth">100</span></h3>
+                <div class="bar">
+                    <div class="health" id="enemyHealthFill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <canvas id="gameCanvas" width="500" height="500"></canvas>
+    
+    <script src="game.js"></script>
+</body>
+</html>
