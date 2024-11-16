@@ -33,17 +33,17 @@ body::after {
     height: 100%;
     z-index: -1; 
 }
-/* 爆炸動畫的 CSS */
+
 .explode {
     position: absolute;
-    width: 50px;  /* 根據 TILE_SIZE 設置 */
-    height: 50px; /* 根據 TILE_SIZE 設置 */
+    width: 50px;  
+    height: 50px; 
     background: url('explosion1.png') no-repeat center center;
     background-size: cover;
     animation: explosionAnimation 0.5s ease-out forwards;
 }
 
-/* 定義爆炸的動畫 */
+
 @keyframes explosionAnimation {
     0% {
         transform: scale(1);
@@ -125,41 +125,41 @@ body {
 }
 
 .bar {
-    width: 150px; /* 固定血條總長度 */
+    width: 150px;
     height: 20px;
-    background-color: #ddd; /* 背景色 */
-    border: 1px solid #999; /* 邊框 */
+    background-color: #ddd;
+    border: 1px solid #999; 
     position: relative;
 }
 
 .health {
     height: 100%;
-    background-color: #f00; /* 血條顏色 */
-    transition: width 0.3s ease; /* 增加動畫效果 */
+    background-color: #f00; 
+    transition: width 0.3s ease; 
 }
 
 #resetButton {
-    background: none; /* 移除按鈕的背景 */
-    border: none;     /* 移除按鈕的邊框 */
-    padding: 0;       /* 移除內邊距 */
+    background: none; 
+    border: none;     
+    padding: 0;      
 }
 
 #resetButton img {
-    width: 200px;      /* 設定圖片的寬度 */
-    height: 100px;     /* 設定圖片的高度 */
+    width: 200px;     
+    height: 100px;     
     
 }
 
-/* 初始畫布樣式 */
+
 #gameCanvas {
-    width: 100%;  /* 使畫布寬度為 100% */
-    height: auto; /* 高度自動調整，保持比例 */
+    width: 100%; 
+    height: auto; 
 }
 
-/* 針對小屏幕設備（如手機）進行調整 */
+
 @media only screen and (max-width: 600px) {
     #gameCanvas {
         width: 100%;
-        height: 300px; /* 設定高度為固定值 */
+        height: 300px; 
     }
 }
