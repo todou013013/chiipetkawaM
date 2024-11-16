@@ -8,6 +8,32 @@ const playerImages = ['me1.png', 'me2.png', 'me3.png', 'me4.png', 'me5.png', 'me
 const enemyImages = ['en1.png', 'en2.png', 'en3.png', 'en4.png', 'en5.png'];
 
 
+
+function resizeCanvas() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+  
+    
+    const ratio = window.devicePixelRatio || 1;
+  
+    
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+  
+    
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+  
+    
+    ctx.scale(ratio, ratio);
+  }
+  
+ 
+  resizeCanvas();
+  
+  
+  window.addEventListener('resize', resizeCanvas);
+
 let grid = Array.from({ length: GRID_SIZE }, () => Array.from({ length: GRID_SIZE }, () => randomImage()));
 let selectedTile = null;
 let matchesToRemove = [];
@@ -28,7 +54,7 @@ let totalEnemyHealth = 100;
 let currentEnemyHealth = 100;
 
 let currentPlayerImage = getRandomImage(playerImages); 
-let currentEnemyImage = getRandomImage(enemyImages);
+let currentEnemyImage = getRandomImage(enemyImages); 
 function getRandomImage(images) {
     const randomIndex = Math.floor(Math.random() * images.length);
     return images[randomIndex];
@@ -40,6 +66,7 @@ window.onload = function() {
     const playerImage = getRandomImage(playerImages);
     document.getElementById("playerImage").src = playerImage;
 
+    
     const enemyImage = getRandomImage(enemyImages);
     document.getElementById("enemyImage").src = enemyImage;
 };
@@ -104,7 +131,7 @@ function resetGame() {
     initializeGrid(); 
     updateStatus(); 
     drawGrid(); 
-    saveGameData();
+    saveGameData(); 
 }
 
 
@@ -141,7 +168,7 @@ function updateStatus() {
     document.getElementById('playerHealth').innerText = playerHealth;
     document.getElementById('currentenemyHealth').innerText = enemyHealth;
     document.getElementById('totalEnemyHealth').innerText = 100 + 20 * (levels-1);
-    document.getElementById('score').innerText = score; 
+    document.getElementById('score').innerText = score; // 更新即時分數
     document.getElementById('showenemyscore').innerText = enemyScore;
 
     const playerHealthPercent = (playerHealth / 100) * 100;
@@ -158,7 +185,7 @@ function updateStatus() {
 function calculateDamage(explosionCount) {
     
 
-    
+  
     score += explosionCount * 2; 
 
     if(steps==0){
@@ -179,14 +206,15 @@ function calculateDamage(explosionCount) {
     updateStatus();
 }
 
+
 function resetGrid() {
-  
+    
     for (let y = 0; y < GRID_SIZE; y++) {
         for (let x = 0; x < GRID_SIZE; x++) {
             let newTile;
             let retryCount = 0;
 
-           
+          
             do {
                 newTile = randomImage(); 
                 retryCount++;
@@ -197,7 +225,6 @@ function resetGrid() {
         }
     }
 
-    
     drawGrid();
     saveGameData();
 
@@ -303,12 +330,12 @@ function weightedRandomImage(x, y) {
         }
     });
 
-   
+    
     
   const mostCommonTile = neighboringTiles.sort((a, b) => count[b] - count[a])[0];
     
     
-    const threshold = count[mostCommonTile] / neighboringTiles.length; 
+    const threshold = count[mostCommonTile] / neighboringTiles.length;
     return Math.random() < threshold ? mostCommonTile : IMAGES[Math.floor(Math.random() * (IMAGES.length - 1))];
 
 }
@@ -342,7 +369,7 @@ function initializeGrid() {
 
 
 function checkForAdjacentMatches(x, y, tile) {
-    
+   
     if (
         (x > 1 && grid[y][x - 1] === tile && grid[y][x - 2] === tile) ||
         (x > 0 && x < GRID_SIZE - 1 && grid[y][x - 1] === tile && grid[y][x + 1] === tile) ||
@@ -351,7 +378,7 @@ function checkForAdjacentMatches(x, y, tile) {
         return true;
     }
 
-    
+   
     if (
         (y > 1 && grid[y - 1][x] === tile && grid[y - 2][x] === tile) ||
         (y > 0 && y < GRID_SIZE - 1 && grid[y - 1][x] === tile && grid[y + 1][x] === tile) ||
@@ -375,7 +402,7 @@ offscreenCanvas.height = canvas.height;
 const offscreenCtx = offscreenCanvas.getContext('2d');
 
 function drawGrid() {
-    
+
     offscreenCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
 
     
@@ -385,7 +412,7 @@ function drawGrid() {
             image.src = img;
             offscreenCtx.drawImage(image, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
 
-           
+            
             if (highlightedTile && highlightedTile.x === x && highlightedTile.y === y) {
                 offscreenCtx.strokeStyle = 'gray'; 
                 offscreenCtx.lineWidth = 6; 
@@ -492,7 +519,6 @@ function removeTiles(tilesToRemove) {
         explosionDiv.style.width = `${TILE_SIZE}px`; 
         explosionDiv.style.height = `${TILE_SIZE}px`;
 
-        
         const canvas = document.getElementById('gameCanvas');
         const canvasRect = canvas.getBoundingClientRect();
         
@@ -509,14 +535,14 @@ function removeTiles(tilesToRemove) {
             explosionDiv.remove();
         });
 
-        
+       
         grid[y][x] = null;
     });
 }
 
 function dropTiles() {
     for (let x = 0; x < GRID_SIZE; x++) {
-        let emptyCount = 0;  
+        let emptyCount = 0; 
 
        
         for (let y = GRID_SIZE - 1; y >= 0; y--) {
@@ -529,7 +555,7 @@ function dropTiles() {
             }
         }
 
-        
+       
         for (let y = 0; y < emptyCount; y++) {
             let newTile;
             newTile = weightedRandomImage();
@@ -559,7 +585,7 @@ function animateRemoval() {
             const newMatches = dropTiles();
             calculateDamage(explosionCount); 
             if (newMatches) {
-                
+               
                 
                 setTimeout(animateRemoval, 800); 
             } else {
@@ -647,7 +673,7 @@ canvas.addEventListener('mouseup', (event) => {
 });
 
 function gameLoop() {
-    drawGrid(); 
+    drawGrid();
     requestAnimationFrame(gameLoop);
 }
 
